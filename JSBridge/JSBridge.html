@@ -1,0 +1,148 @@
+<!--
+    作者：guotq
+    时间：2018-02-01 16:37:21
+    描述：JSBridge 前端实现的逻辑
+-->
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>JSBridge</title>
+
+        <style>
+            .panel {
+
+            }
+
+            .panel .panel-title {
+
+            }
+
+            .panel .panel-container .panel-con {
+
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="panel">
+            <div class="panel-title"></div>
+            <div class="panel-container">
+                <p calss="panel-con"></p>
+            </div>
+        </div>
+
+        <script>
+            window.Hybird = {};
+
+            /**
+             * JSBridge demo
+             * hybrid://example?callback=callbackid&params=params
+             */
+            class RequestHybrid {
+                /**
+                 * 处理JSBrigde逻辑，主站，发配到各个处理点下去
+                 * @param {Object} options
+                 * name {String} 方法名字
+                 *
+                 */
+                constructor(options) {
+                    /* 确保需要传入 options.name */
+                    if (!options.name) {
+                        throw new Error('请输入options.name');
+                    }
+
+                    /* 处理函数 callback 与 callbackID 关联 */
+                    if (options.callback && typeof options.callback === 'function') {
+                        var _t = this.getGenerateUUID();
+
+                        Hybird[_t] = options.callback;
+                        options.callback = _t;
+                    }
+
+                    /* 发给容器拦截 */
+                    this.sendUrl(options);
+                }
+
+                /**
+                 * 发送数据
+                 * @param {Object} options 参数
+                 */
+                sendUrl(options) {
+                    let url = this.getUrl(options);
+                    let iframeEle = document.createElement('iframe');
+
+                    iframeEle.style.display = 'none';
+                    iframeEle.src = url;
+
+                    document.body.appendChild(iframeEle);
+
+                    // 如果在 android 下直接删除，可能会导致原生解析不到。
+                    setTimeout(() => {
+                        iframeEle.remove();
+                        iframeEle.null;
+                    }, 1000);
+                }
+
+                /**
+                 * 获取url
+                 * @param {Object} options 参数
+                 * @return {String} url 地址
+                 */
+                getUrl(options) {
+                    let url = 'hybrid://' + options.name,
+                        flag = '?';
+
+                    if (options.callback) {
+                        url += (flag + options.callback);
+                        flag = '&';
+                    }
+
+                    if (options.params) {
+
+                        if (typeof options.params === 'object') {
+                            url += (flag + JSON.stringify(options.params));
+                        }
+                        else {
+                            url += (flag + options.params);
+                        }
+
+                        flag = '&';
+                    }
+
+                    return url;
+                }
+
+                /**
+                 *
+                 * @return {string} uuid 唯一标识
+                 */
+                getGenerateUUID() {
+                    let d = new Date().getTime();
+                    let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                        let r = (d + Math.random() * 16) % 16 | 0;
+                        d = Math.floor(d / 16);
+                        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+                    });
+
+                    return uuid;
+                }
+            }
+
+            new RequestHybrid({
+                name: 'example',
+                params: {
+                    name: 'saber',
+                    age: '21'
+                },
+                callback: function () {
+                    console.log('callback');
+                }
+            });
+        </script>
+    </body>
+</html>
