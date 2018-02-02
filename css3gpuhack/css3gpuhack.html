@@ -14,7 +14,7 @@
         <title>CSS3 开启GPU加速的坑</title>
 
         <style>
-            div {
+            #title {
                 animation: move 1s linear infinite;
             }
             
@@ -41,6 +41,7 @@
             ul li {
                 position: relative;
                 height: 30px;
+                line-height: 30px;
                 overflow: hidden;
                 border-top: 1px dashed #ccc;
             }
@@ -54,19 +55,23 @@
     </head>
     <body>
 
-        <div>
+        <div id="title">
             <h2>我是开启gpu加速的title</h2>
         </div>
+
+        <input type="checkbox" id="repair">把我选上，试试还卡吗？
 
         <ul id="list">
         </ul>
 
         <script>
 
+            let titleEle = document.getElementById('title');
+
             let promise = new Promise(function (resolve, reject) {
                 let item = '';
 
-                for(let i = 0, len = 1000; i < len; i++) {
+                for(let i = 0, len = 2000; i < len; i++) {
                     item += '<li>列表<time>2018-02-02</time></li>';
                 }
 
@@ -76,6 +81,15 @@
             promise.then(function (data) {
                 document.getElementById('list').innerHTML = data;
             });
+
+            document.getElementById('repair').addEventListener('click', function () {
+                if (this.checked) {
+                    titleEle.style.cssText = 'position: relative; z-index: 1';
+                }
+                else {
+                    titleEle.style.position = 'static';
+                }
+            })
 
         </script>
     </body>
