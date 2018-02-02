@@ -1,0 +1,23 @@
+<!--
+    作者：guotq
+    时间：2018-02-01 19:31:54
+    描述：直观的看清文档流
+-->
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+    </head>
+    <body>
+
+        <h2>最原始的文档流</h2>
+        <div style="margin-bottom: 20px; transform: translate3d(0, 0, 0); position: relative; z-index: 1;">硬件加速过后，自己创建一个复合图层渲染</div>
+        <div style="position: absolute;">absolute声明的，脱离普通文档流，但是仍然属于默认复合图层</div>
+
+    </body>
+</html>

@@ -17,7 +17,7 @@
             #title {
                 animation: move 1s linear infinite;
             }
-            
+
             @keyframes move {
                 0% {
                     transform: translate3d(0, 0, 0);
@@ -78,7 +78,7 @@
 
                 resolve(item);
             });
-            
+
             promise.then(function (data) {
                 document.getElementById('list').innerHTML = data;
             });
