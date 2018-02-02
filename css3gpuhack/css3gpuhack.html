@@ -1,0 +1,82 @@
+<!--
+    作者：guotq
+    时间：2018-02-01 19:31:54
+    描述：css3 GPU 坑
+-->
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>CSS3 开启GPU加速的坑</title>
+
+        <style>
+            div {
+                animation: move 1s linear infinite;
+            }
+            
+            @keyframes move {
+                0% {
+                    transform: translate3d(0, 0, 0);
+                }
+
+                50% {
+                    transform: translate3d(10px, 0, 0);
+                }
+
+                100% {
+                    transform: translate3d(0, 0, 0);
+                }
+            }
+
+            ul,
+            li {
+                margin: 0;
+                padding: 0;
+            }
+
+            ul li {
+                position: relative;
+                height: 30px;
+                overflow: hidden;
+                border-top: 1px dashed #ccc;
+            }
+
+            ul li time {
+                position: absolute;
+                right: 5px;
+                font-size: 12px;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div>
+            <h2>我是开启gpu加速的title</h2>
+        </div>
+
+        <ul id="list">
+        </ul>
+
+        <script>
+
+            let promise = new Promise(function (resolve, reject) {
+                let item = '';
+
+                for(let i = 0, len = 1000; i < len; i++) {
+                    item += '<li>列表<time>2018-02-02</time></li>';
+                }
+
+                resolve(item);
+            });
+            
+            promise.then(function (data) {
+                document.getElementById('list').innerHTML = data;
+            });
+
+        </script>
+    </body>
+</html>
