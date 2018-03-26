@@ -63,7 +63,7 @@
                     // 如果在 android 下直接删除，可能会导致原生解析不到。
                     setTimeout(() => {
                         iframeEle.remove();
-                        iframeEle.null;
+                        iframeEle = null;
                     }, 1000);
                 }
 
