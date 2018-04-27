@@ -1,13 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <meta name="format-detection" content="telephone=no" />
-        <title>移动端选择头像</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="format-detection" content="telephone=no" />
+    <title>移动端选择头像</title>
+    <script src="https://cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
+
+    <style>
+        .container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #333;
+            z-index: 100;
+        }
+
+        .container img {
+            position: absolute;
+            width: 100%;
+            z-index: -1;
+            transition: transform .1s ease;
+        }
+
+        .range-rectangle {
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            top: 50%;
+            height: 300px;
+            margin: 0 auto;
+            margin-top: -150px;
+            border: 2px solid #fff;
+        }
+
+        .topmask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #fff;
+        }
+    </style>
 </head>
+
 <body>
-        <input type="file" capture="camera" id="upload" />
+
+    <!-- 主要是采用 缩放 参考： http://www.jq22.com/jquery-info7395 -->
+    <div class="container" id="container">
+        <div class="topmask"></div>
+        <div class="range-rectangle" id="range-rectangle">
+            <img src="./C4n3blKVUAAIgwc.jpeg" alt="" id="img">
+        </div>
+    </div>
+
+    <script src="./cut.js"></script>
 </body>
+
 </html>

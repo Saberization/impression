@@ -1,0 +1,59 @@
+<!--
+    @Author: guotq
+    @Date: 2018-03-27 14:05:54
+    @Last Modified by: guotq
+    @Last Modified time: 2018-03-27 14:05:58
+    @Description: base64 转换为 blob 对象
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="format-detection" content="telephone=no" />
+        <title>base64 转换为 blob 对象</title>
+    </head>
+    <body>
+        <input type="file" id="upload">
+
+        <img src="" alt="" id="preview">
+
+
+        <script>
+
+            const va = 'LyoqDQogICAgICog1+nWr7v6ubm0+sLr1qTQp9HpIDEuyKu5+tfp1q+7+rm5tPrC69PJsMvOu8r919ajqLvytPPQtMCttqHX1sS4o6mxvszltPrC67rN0rvOu8r919ajqLvytPPQtMCttqHX1sS4o6nQo9HpwuvX6bPJoaMNCiAgICAgKiDNs9K7yee74bHgwuvQo9HpuebU8qO6IF5bMC05QS1aXXsxOH0kDQogICAgICogQHBhcmFtIHNvdXJjZW51bQ0KICAgICAqIEByZXR1cm4NCiAgICAgKi8NCiAgICBzdGF0aWMgcHVibGljIGludCBjaGVja1p6amdkbShTdHJpbmcgc291cmNlbnVtKSB7DQogICAgICAgIGlmIChvYmoyU3RyaW5nKHNvdXJjZW51bSkuZXF1YWxzKCIiKSkNCiAgICAgICAgICAgIHJldHVybiAtMTsNCiAgICAgICAgLy8g1f3U8rHttO/KvcalxeQNCiAgICAgICAgU3RyaW5nIHJlZ3ggPSAiXlxccypbQS1aMC05XXs4fS1bQS1aMC05XVxccyokIjsNCiAgICAgICAgUGF0dGVybiBwYXR0ZXJuID0gUGF0dGVybi5jb21waWxlKHJlZ3gpOw0KICAgICAgICBNYXRjaGVyIG1hdGNoZXIgPSBwYXR0ZXJuLm1hdGNoZXIoc291cmNlbnVtKTsNCiAgICAgICAgaWYgKG1hdGNoZXIubWF0Y2hlcygpKQ0KICAgICAgICAgICAgcmV0dXJuIDI7DQogICAgICAgIFN0cmluZyByZWd4MSA9ICJeXFxzKltBLVowLTldezh9W0EtWjAtOV1cXHMqJCI7DQogICAgICAgIHBhdHRlcm4gPSBQYXR0ZXJuLmNvbXBpbGUocmVneDEpOw0KICAgICAgICBtYXRjaGVyID0gcGF0dGVybi5tYXRjaGVyKHNvdXJjZW51bSk7DQogICAgICAgIGlmIChtYXRjaGVyLm1hdGNoZXMoKSkNCiAgICAgICAgICAgIHJldHVybiAxOw0KICAgICAgICByZXR1cm4gMDsNCiAgICB9';
+
+            function vari(data) {
+                let btypes = window.atob(va);
+                let ab = new ArrayBuffer(btypes.length);
+                let ia = new Uint8Array(ab);
+
+                for (let i = 0, len = btypes.length; i < len; i++) {
+                    ia[i] = btypes.charCodeAt(i);
+                }
+
+                return new Blob([ab], {
+                    type: 'txt'
+                });
+            }
+
+            function download(blob, filename) {
+                let a = document.createElement('a');
+
+                a.download = filename;
+                a.href = window.URL.createObjectURL(blob);
+
+                a.click();
+
+                // 使用完释放
+                window.URL.revokeObjectURL(blob);
+            }
+
+            download(vari(va), 'aa.txt');
+        </script>
+
+    </body>
+</html>
